@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, BadgeCheck, Clock, Sparkles, Tag, Truck, Star, Quote } from "lucide-react";
 import hero from "@/assets/hero-printing.jpg";
 import { AnimatedTagline } from "@/components/site/AnimatedTagline";
@@ -41,19 +42,63 @@ const testimonials = [
 ];
 
 function HomePage() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [offsetY, setOffsetY] = useState(0);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const el = heroRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        setOffsetY(window.scrollY);
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setMouse({ x, y });
+  };
+
   return (
     <div>
       {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
+      <section
+        ref={heroRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={() => setMouse({ x: 0, y: 0 })}
+        className="relative isolate overflow-hidden bg-primary text-primary-foreground"
+      >
         <img
           src={hero}
           alt="Industrial printing press"
-          className="absolute inset-0 h-full w-full object-cover opacity-50"
+          className="absolute inset-0 h-[115%] w-full object-cover opacity-50 will-change-transform transition-transform duration-300 ease-out"
+          style={{
+            transform: `translate3d(${mouse.x * 14}px, ${offsetY * 0.25 + mouse.y * 14}px, 0) scale(1.05)`,
+          }}
           width={1920}
           height={1080}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black" />
         <div className="absolute inset-0 grid-bg opacity-20" />
+        <div
+          className="pointer-events-none absolute -inset-px opacity-60 transition-opacity duration-500"
+          style={{
+            background: `radial-gradient(600px circle at ${(mouse.x + 0.5) * 100}% ${(mouse.y + 0.5) * 100}%, rgba(255,255,255,0.08), transparent 60%)`,
+          }}
+        />
 
         <div className="relative mx-auto max-w-7xl px-4 py-28 md:px-8 md:py-40">
           <div className="max-w-3xl">
@@ -75,16 +120,18 @@ function HomePage() {
                 href={whatsappLink("Hi, I want to place an order with Gitesh Enterprises")}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-glow transition-all hover:scale-105"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-glow transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_-5px_rgba(255,255,255,0.6)] active:scale-95 active:duration-75"
               >
-                Order Now
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/5 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="relative">Order Now</span>
+                <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
               </a>
               <Link
                 to="/shop"
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/60 hover:bg-white/10 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] active:scale-95 active:duration-75"
               >
                 Browse Shop
+                <ArrowRight className="h-4 w-4 opacity-0 -ml-2 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0" />
               </Link>
             </div>
           </div>
