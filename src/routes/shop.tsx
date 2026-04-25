@@ -81,14 +81,26 @@ function ShopPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
+        <div className="mb-6 flex items-center justify-between text-sm text-muted-foreground">
+          <span>
+            Showing <span className="font-semibold text-foreground">{shown.length}</span> of{" "}
+            <span className="font-semibold text-foreground">{filtered.length}</span> products
+          </span>
+          {active !== "All" && (
+            <span className="hidden sm:inline">
+              Category: <span className="font-semibold text-foreground">{active}</span>
+            </span>
+          )}
+        </div>
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((p, i) => (
+          {shown.map((p, i) => (
             <Link
               key={p.slug}
               to="/shop/$slug"
               params={{ slug: p.slug }}
               className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-elevated animate-slide-up"
-              style={{ animationDelay: `${i * 50}ms` }}
+              style={{ animationDelay: `${(i % PAGE_SIZE) * 40}ms` }}
             >
               <div className="relative aspect-square overflow-hidden bg-muted">
                 <img
@@ -111,15 +123,33 @@ function ShopPage() {
                     <span className="font-display text-xl font-bold">₹{p.price}</span>
                     <span className="ml-1 text-xs text-muted-foreground">/ {p.unit}</span>
                   </div>
-                  <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground">View →</span>
+                  <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground">
+                    View →
+                  </span>
                 </div>
               </div>
             </Link>
           ))}
         </div>
 
+        {hasMore && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={() => setVisible((v) => v + PAGE_SIZE)}
+              className="group relative overflow-hidden rounded-full border border-border bg-background px-8 py-3 text-sm font-semibold transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground active:scale-95"
+            >
+              Load more products
+              <span className="ml-2 text-muted-foreground group-hover:text-primary-foreground">
+                ({filtered.length - visible} left)
+              </span>
+            </button>
+          </div>
+        )}
+
         {filtered.length === 0 && (
-          <div className="py-20 text-center text-muted-foreground">No products match your search.</div>
+          <div className="py-20 text-center text-muted-foreground">
+            No products match your search.
+          </div>
         )}
       </section>
     </div>
