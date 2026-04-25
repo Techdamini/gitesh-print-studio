@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, BadgeCheck, Clock, Sparkles, Tag, Truck, Star, Quote } from "lucide-react";
+import { ArrowRight, BadgeCheck, Clock, Sparkles, Tag, Truck, Star, Quote, Image as ImageIcon, Frame, Coffee, Shirt, Sticker, CreditCard, Smartphone, BookOpen, Gift, Palette } from "lucide-react";
 import hero from "@/assets/hero-printing.jpg";
 import { AnimatedTagline } from "@/components/site/AnimatedTagline";
 import { Reveal } from "@/components/site/Reveal";
@@ -220,6 +220,47 @@ function HomePage() {
                     </div>
                   </div>
                 </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OTHER PRINT-ON-DEMAND CATEGORIES */}
+      <section className="border-y border-border bg-muted/30 py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <Reveal className="mb-12 max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Explore More</span>
+            <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
+              Other print-on-demand products
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Tap any category to browse matching products in our shop.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10">
+            {[
+              { icon: ImageIcon, label: "Posters", to: "/shop", search: "poster" },
+              { icon: Palette, label: "Canvas", to: "/shop", search: "canvas" },
+              { icon: Coffee, label: "Mugs", to: "/shop", search: "mug" },
+              { icon: Shirt, label: "Apparel", to: "/shop", search: "apparel" },
+              { icon: Frame, label: "Framed", to: "/shop", search: "frame" },
+              { icon: Sticker, label: "Stickers", to: "/shop", search: "sticker" },
+              { icon: CreditCard, label: "Cards", to: "/shop", search: "card" },
+              { icon: Smartphone, label: "Phone Cases", to: "/shop", search: "phone" },
+              { icon: BookOpen, label: "Brochures", to: "/shop", search: "brochure" },
+              { icon: Gift, label: "Awards", to: "/shop", search: "trophy" },
+            ].map((c, i) => (
+              <Reveal key={c.label} delay={i * 50} className="group flex flex-col items-center">
+                <Link
+                  to={c.to}
+                  className="flex h-20 w-20 items-center justify-center rounded-full border border-border bg-background shadow-soft transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-elevated md:h-24 md:w-24"
+                  aria-label={c.label}
+                >
+                  <c.icon className="h-7 w-7 md:h-8 md:w-8" />
+                </Link>
+                <span className="mt-3 text-center text-xs font-semibold md:text-sm">{c.label}</span>
               </Reveal>
             ))}
           </div>

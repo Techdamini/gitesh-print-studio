@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, Printer } from "lucide-react";
+import { Mail, MapPin, Phone, Printer, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { ADDRESS, EMAIL, GSTIN, PHONE_DISPLAY } from "@/lib/whatsapp";
 
 export function Footer() {
@@ -17,7 +17,19 @@ export function Footer() {
           <p className="mt-4 text-sm text-white/60">
             All printing solutions in one place — flex, LED boards, ID cards, trophies, and more.
           </p>
-          <p className="mt-4 text-xs text-white/40">GSTIN: {GSTIN}</p>
+          <div className="mt-5 flex gap-3">
+            {[Facebook, Instagram, Linkedin, Twitter].map((Icon, i) => (
+              <a
+                key={i}
+                href="#"
+                aria-label="Social link"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all hover:border-white hover:bg-white hover:text-primary"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+          <p className="mt-5 text-xs text-white/40">GSTIN: {GSTIN}</p>
         </div>
 
         <div>
@@ -47,8 +59,36 @@ export function Footer() {
           </ul>
         </div>
       </div>
+      {/* Payments + Partners strip */}
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-8 md:flex-row md:px-8">
+          <div className="flex flex-col items-center gap-3 md:flex-row md:gap-5">
+            <span className="text-xs font-semibold uppercase tracking-widest text-white/50">We accept</span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {["VISA", "Mastercard", "UPI", "GPay", "Paytm", "RuPay", "COD"].map((p) => (
+                <span
+                  key={p}
+                  className="rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold tracking-wide text-white/80"
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-3 md:flex-row md:gap-5">
+            <span className="text-xs font-semibold uppercase tracking-widest text-white/50">Trusted by</span>
+            <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-semibold text-white/60">
+              <span className="rounded border border-white/15 px-2.5 py-1">DAV School</span>
+              <span className="rounded border border-white/15 px-2.5 py-1">Sharma Electronics</span>
+              <span className="rounded border border-white/15 px-2.5 py-1">Singh Garments</span>
+              <span className="rounded border border-white/15 px-2.5 py-1">+500 more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="border-t border-white/10 px-4 py-6 text-center text-xs text-white/40 md:px-8">
-        © {new Date().getFullYear()} Gitesh Enterprises. All rights reserved.
+        © {new Date().getFullYear()} Gitesh Enterprises. All rights reserved. · Made with care in Ludhiana.
       </div>
     </footer>
   );
