@@ -30,7 +30,7 @@ const make = (
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
-  const image = PRODUCT_IMAGES[slug] ?? FALLBACK[category];
+  const image = imageForProduct(slug);
   return {
     slug,
     name,
