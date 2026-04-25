@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, BadgeCheck, Check, Truck, MessageCircle } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Check, Truck, MessageCircle, ShoppingBag } from "lucide-react";
 import { getProduct, products } from "@/lib/products";
-import { orderMessage, whatsappLink } from "@/lib/whatsapp";
+import { whatsappLink } from "@/lib/whatsapp";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: ({ params }) => {
