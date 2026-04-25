@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Printer } from "lucide-react";
+import { Menu, X, Printer, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/lib/cart";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -15,6 +16,7 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { count, open: openCart } = useCart();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
@@ -45,6 +47,18 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={openCart}
+            aria-label="Open cart"
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:bg-muted"
+          >
+            <ShoppingBag className="h-4 w-4" />
+            {count > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                {count}
+              </span>
+            )}
+          </button>
           <Link
             to="/order"
             className="hidden md:inline-flex h-10 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:scale-105 hover:shadow-glow"
