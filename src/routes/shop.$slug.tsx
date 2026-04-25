@@ -37,12 +37,49 @@ export const Route = createFileRoute("/shop/$slug")({
   component: ProductPage,
 });
 
+const SIZE_PRESETS = ["Small", "Medium", "Large", "Custom"] as const;
+type Preset = (typeof SIZE_PRESETS)[number];
+
 function ProductPage() {
   const { product } = Route.useLoaderData();
-  const [size, setSize] = useState(product.defaultSize ?? "");
+  const { add } = useCart();
+  const [preset, setPreset] = useState<Preset>("Medium");
+  const [customW, setCustomW] = useState("");
+  const [customH, setCustomH] = useState("");
   const [qty, setQty] = useState(1);
 
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 4);
+
+  const resolvedSize =
+    preset === "Custom"
+      ? customW && customH
+        ? `${customW} x ${customH}`
+        : product.defaultSize ?? "Custom"
+      : `${preset}${product.defaultSize ? ` (${product.defaultSize})` : ""}`;
+
+  const buyNowMessage = [
+    "Hello Gitesh Enterprises,",
+    "I want to order the following product:",
+    "",
+    `Product Name: ${product.name}`,
+    `Size: ${resolvedSize}`,
+    `Quantity: ${qty}`,
+    `Price: ₹${product.price} / ${product.unit}`,
+    "",
+    "Please share payment QR code.",
+  ].join("\n");
+
+  const handleAddToCart = () => {
+    add({
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      unit: product.unit,
+      image: product.image,
+      size: resolvedSize,
+      qty,
+    });
+  };
 
   return (
     <div>
@@ -90,19 +127,44 @@ function ProductPage() {
               ))}
             </ul>
 
-            {product.hasCustomSize && (
-              <div className="mt-8">
-                <label className="text-sm font-semibold">Custom Size</label>
-                <input
-                  type="text"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
-                  placeholder={product.defaultSize}
-                  className="mt-2 block w-full rounded-lg border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
-                />
-                <p className="mt-1 text-xs text-muted-foreground">Type any dimensions e.g. “8 x 4 ft”.</p>
+            <div className="mt-8">
+              <label className="text-sm font-semibold">Size</label>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {SIZE_PRESETS.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setPreset(s)}
+                    className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
+                      preset === s
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-background hover:border-primary"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
-            )}
+
+              {preset === "Custom" && (
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    value={customW}
+                    onChange={(e) => setCustomW(e.target.value)}
+                    placeholder="Width (e.g. 8 ft)"
+                    className="rounded-lg border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                  />
+                  <input
+                    type="text"
+                    value={customH}
+                    onChange={(e) => setCustomH(e.target.value)}
+                    placeholder="Height (e.g. 4 ft)"
+                    className="rounded-lg border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                  />
+                </div>
+              )}
+              <p className="mt-2 text-xs text-muted-foreground">Selected: {resolvedSize}</p>
+            </div>
 
             <div className="mt-6 flex items-center gap-4">
               <label className="text-sm font-semibold">Quantity</label>
@@ -114,20 +176,20 @@ function ProductPage() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
+              <button
+                onClick={handleAddToCart}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-7 py-3.5 text-sm font-semibold transition-all hover:border-primary hover:bg-muted"
+              >
+                <ShoppingBag className="h-4 w-4" /> Add to Cart
+              </button>
               <a
-                href={whatsappLink(orderMessage(product.name, size || undefined, qty))}
+                href={whatsappLink(buyNowMessage)}
                 target="_blank"
                 rel="noreferrer"
                 className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:scale-105 hover:shadow-glow"
               >
-                <MessageCircle className="h-4 w-4" /> Order Now on WhatsApp
+                <MessageCircle className="h-4 w-4" /> Buy Now on WhatsApp
               </a>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-muted"
-              >
-                Get a custom quote
-              </Link>
             </div>
 
             <div className="mt-8 flex items-center gap-3 rounded-xl border border-border bg-muted/40 p-4 text-sm text-muted-foreground">
