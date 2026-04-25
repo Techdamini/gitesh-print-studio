@@ -1,11 +1,3 @@
-import catOutdoor from "@/assets/cat-outdoor.jpg";
-import catSignage from "@/assets/cat-signage.jpg";
-import catCards from "@/assets/cat-cards.jpg";
-import catAwards from "@/assets/cat-awards.jpg";
-import catStickers from "@/assets/cat-stickers.jpg";
-import catPrint from "@/assets/cat-print.jpg";
-import catDisplay from "@/assets/cat-display.jpg";
-
 export type Product = {
   slug: string;
   name: string;
@@ -20,22 +12,9 @@ export type Product = {
   hasCustomSize?: boolean;
 };
 
-// Strict per-category imagery — guarantees every product visually matches
-// its category. AI-generated, product-focused, consistent style.
-const FALLBACK = {
-  Outdoor: catOutdoor,
-  Signage: catSignage,
-  Cards: catCards,
-  Awards: catAwards,
-  Stickers: catStickers,
-  Print: catPrint,
-  Display: catDisplay,
-} as const;
+type Cat = "Outdoor" | "Signage" | "Cards" | "Awards" | "Stickers" | "Print" | "Display";
 
-type Cat = keyof typeof FALLBACK;
-
-// Per-slug overrides can be added here if/when variant photos are generated.
-const PRODUCT_IMAGES: Record<string, string> = {};
+const imageForProduct = (slug: string) => `/shop-products/${slug}.jpg`;
 
 const make = (
   category: Cat,
