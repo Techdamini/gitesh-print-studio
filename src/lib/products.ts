@@ -1,12 +1,10 @@
-import flex from "@/assets/product-flex.jpg";
-import led from "@/assets/product-led.jpg";
-import idcard from "@/assets/product-idcard.jpg";
-import trophy from "@/assets/product-trophy.jpg";
-import nameplate from "@/assets/product-nameplate.jpg";
-import stickers from "@/assets/product-stickers.jpg";
-import poster from "@/assets/product-poster.jpg";
-import standee from "@/assets/product-standee.jpg";
-import card from "@/assets/product-card.jpg";
+import catOutdoor from "@/assets/cat-outdoor.jpg";
+import catSignage from "@/assets/cat-signage.jpg";
+import catCards from "@/assets/cat-cards.jpg";
+import catAwards from "@/assets/cat-awards.jpg";
+import catStickers from "@/assets/cat-stickers.jpg";
+import catPrint from "@/assets/cat-print.jpg";
+import catDisplay from "@/assets/cat-display.jpg";
 
 export type Product = {
   slug: string;
@@ -22,70 +20,22 @@ export type Product = {
   hasCustomSize?: boolean;
 };
 
-// Category fallback images (used if a slug-specific image isn't mapped).
+// Strict per-category imagery — guarantees every product visually matches
+// its category. AI-generated, product-focused, consistent style.
 const FALLBACK = {
-  Outdoor: flex,
-  Signage: led,
-  Cards: idcard,
-  Awards: trophy,
-  Stickers: stickers,
-  Print: poster,
-  Display: standee,
+  Outdoor: catOutdoor,
+  Signage: catSignage,
+  Cards: catCards,
+  Awards: catAwards,
+  Stickers: catStickers,
+  Print: catPrint,
+  Display: catDisplay,
 } as const;
 
 type Cat = keyof typeof FALLBACK;
 
-// Distinct, product-specific imagery via Unsplash CDN (free, lazy-loaded).
-// Each slug maps to a hand-picked photo ID so every product looks unique.
-const U = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`;
-
-const PRODUCT_IMAGES: Record<string, string> = {
-  // Outdoor
-  "flex-banner-printing": U("1567446537708-ac4aa75c9c28"),
-  "vinyl-banner": U("1611532736597-de2d4265fba3"),
-  "mesh-banner": U("1504805572947-34fad45aed93"),
-  "backlit-flex": U("1518972559570-7cc1309f3229"),
-  "eco-solvent-prints": U("1605792657660-596af9009e82"),
-  "large-hoardings": U("1480714378408-67cf0d13bc1b"),
-  "event-banners": U("1519671482749-fd09be7ccebf"),
-  // Signage
-  "led-glow-sign-board": U("1545063328-c8e3faffa16f"),
-  "glow-sign-board": U("1514306191717-452ec28c7814"),
-  "acrylic-signage": U("1581090700227-1e37b190418e"),
-  "3d-letter-boards": U("1572177812156-58036aae439c"),
-  "metal-sign-boards": U("1565084888279-aca607ecce0c"),
-  "direction-boards": U("1573497019418-b400bb3ab074"),
-  "designer-name-plates": U("1503602642458-232111445657"),
-  // Cards
-  "school-id-cards": U("1503676260728-1c00da094a0b"),
-  "corporate-id-cards": U("1559526324-4b87b5e36e44"),
-  "pvc-cards": U("1556742393-d75f468bfcb0"),
-  "smart-cards": U("1556742044-3c52d6e88c62"),
-  "visitor-cards": U("1606857521015-7f9fcf423740"),
-  "premium-business-cards": U("1606857521015-7f9fcf423740"),
-  // Awards
-  "trophy-designs": U("1567427017947-545c5f8d16ad"),
-  "acrylic-awards": U("1551976601-fbb7e0ea9f53"),
-  "wooden-awards": U("1591291621164-2c6367723315"),
-  "crystal-trophies": U("1518709268805-4e9042af2176"),
-  "custom-engraved-awards": U("1564399579883-451a5d44ec08"),
-  // Stickers
-  "custom-stickers": U("1611532736602-de8a72c3d743"),
-  "vinyl-stickers": U("1626785774573-4b799315345d"),
-  "logo-stickers": U("1572375992501-4b0892d50c69"),
-  "waterproof-stickers": U("1620207418302-439b387441b0"),
-  // Print
-  "posters": U("1561070791-2526d30994b8"),
-  "brochures": U("1586281380349-632531db7ed4"),
-  "flyers": U("1586953208448-b95a79798f07"),
-  "visiting-cards": U("1611532736417-4d5b76e95cdf"),
-  // Display
-  "roll-up-standee": U("1540317580384-e5d43616b9aa"),
-  "exhibition-stands": U("1540575467063-178a50c2df87"),
-  "backdrop-displays": U("1492684223066-81342ee5ff30"),
-  "pop-up-display": U("1505373877841-8d25f7d46678"),
-};
+// Per-slug overrides can be added here if/when variant photos are generated.
+const PRODUCT_IMAGES: Record<string, string> = {};
 
 const make = (
   category: Cat,
