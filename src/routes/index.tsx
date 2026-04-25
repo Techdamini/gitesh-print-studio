@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, BadgeCheck, Clock, Sparkles, Tag, Truck, Star, Quote } from "lucide-react";
 import hero from "@/assets/hero-printing.jpg";
 import { AnimatedTagline } from "@/components/site/AnimatedTagline";
+import { Reveal } from "@/components/site/Reveal";
 import { products } from "@/lib/products";
 import { whatsappLink } from "@/lib/whatsapp";
 
@@ -152,17 +153,19 @@ function HomePage() {
 
       {/* FEATURES */}
       <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="mb-14 max-w-2xl">
+        <Reveal className="mb-14 max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Why Choose Us</span>
           <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
             Print perfection, delivered.
           </h2>
-        </div>
+        </Reveal>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {features.map((f) => (
-            <div
+          {features.map((f, i) => (
+            <Reveal
               key={f.title}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-elevated"
+              variant="scale"
+              delay={i * 100}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated"
             >
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-transform group-hover:rotate-[-6deg]">
                 <f.icon className="h-5 w-5" />
@@ -170,7 +173,7 @@ function HomePage() {
               <h3 className="font-display text-lg font-semibold">{f.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{f.text}</p>
               <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/5 transition-transform group-hover:scale-150" />
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -178,7 +181,7 @@ function HomePage() {
       {/* SHOP PREVIEW */}
       <section className="bg-muted/40 py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
+          <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Bestsellers</span>
               <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">From our shop</h2>
@@ -186,37 +189,38 @@ function HomePage() {
             <Link to="/shop" className="text-sm font-semibold underline underline-offset-4 hover:no-underline">
               View all products →
             </Link>
-          </div>
+          </Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.slice(0, 4).map((p) => (
-              <Link
-                key={p.slug}
-                to="/shop/$slug"
-                params={{ slug: p.slug }}
-                className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-elevated"
-              >
-                <div className="relative aspect-square overflow-hidden bg-muted">
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    loading="lazy"
-                    width={1024}
-                    height={1024}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <span className="absolute left-3 top-3 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
-                    {p.category}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display text-base font-semibold">{p.name}</h3>
-                  <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{p.short}</p>
-                  <div className="mt-3 flex items-baseline gap-1">
-                    <span className="font-display text-lg font-bold">₹{p.price}</span>
-                    <span className="text-xs text-muted-foreground">/ {p.unit}</span>
+            {products.slice(0, 4).map((p, i) => (
+              <Reveal key={p.slug} variant="scale" delay={i * 90}>
+                <Link
+                  to="/shop/$slug"
+                  params={{ slug: p.slug }}
+                  className="group block overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated"
+                >
+                  <div className="relative aspect-square overflow-hidden bg-muted">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      loading="lazy"
+                      width={1024}
+                      height={1024}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <span className="absolute left-3 top-3 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
+                      {p.category}
+                    </span>
                   </div>
-                </div>
-              </Link>
+                  <div className="p-5">
+                    <h3 className="font-display text-base font-semibold">{p.name}</h3>
+                    <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{p.short}</p>
+                    <div className="mt-3 flex items-baseline gap-1">
+                      <span className="font-display text-lg font-bold">₹{p.price}</span>
+                      <span className="text-xs text-muted-foreground">/ {p.unit}</span>
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -224,14 +228,19 @@ function HomePage() {
 
       {/* TESTIMONIALS */}
       <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="mb-14 max-w-2xl">
+        <Reveal className="mb-14 max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Testimonials</span>
           <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">Loved by 500+ customers</h2>
-        </div>
+        </Reveal>
         <div className="grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="relative rounded-2xl border border-border bg-card p-7">
-              <Quote className="h-8 w-8 text-muted-foreground/20" />
+          {testimonials.map((t, i) => (
+            <Reveal
+              key={t.name}
+              as="figure"
+              delay={i * 120}
+              className="group relative rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated"
+            >
+              <Quote className="h-8 w-8 text-muted-foreground/20 transition-colors group-hover:text-muted-foreground/40" />
               <blockquote className="mt-4 text-base leading-relaxed">{t.text}</blockquote>
               <div className="mt-6 flex items-center justify-between">
                 <figcaption>
@@ -239,19 +248,19 @@ function HomePage() {
                   <div className="text-xs text-muted-foreground">{t.role}</div>
                 </figcaption>
                 <div className="flex gap-0.5">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current text-foreground" />
+                  {Array.from({ length: t.rating }).map((_, idx) => (
+                    <Star key={idx} className="h-4 w-4 fill-current text-foreground" />
                   ))}
                 </div>
               </div>
-            </figure>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 pb-24 md:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-16">
+        <Reveal variant="scale" className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-16">
           <div className="absolute inset-0 grid-bg opacity-10" />
           <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
           <div className="relative flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
@@ -265,12 +274,12 @@ function HomePage() {
               href={whatsappLink("Hi, I want to discuss a printing order with Gitesh Enterprises")}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-primary transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-primary transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_-5px_rgba(255,255,255,0.6)] active:scale-95"
             >
               Chat on WhatsApp <ArrowRight className="h-4 w-4" />
             </a>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );
