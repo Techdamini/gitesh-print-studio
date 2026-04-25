@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { products } from "@/lib/products";
 import { Search } from "lucide-react";
+
+const PAGE_SIZE = 12;
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -19,12 +21,25 @@ function ShopPage() {
   const cats = useMemo(() => ["All", ...Array.from(new Set(products.map((p) => p.category)))], []);
   const [active, setActive] = useState("All");
   const [q, setQ] = useState("");
+  const [visible, setVisible] = useState(PAGE_SIZE);
 
-  const filtered = products.filter(
-    (p) =>
-      (active === "All" || p.category === active) &&
-      (q === "" || p.name.toLowerCase().includes(q.toLowerCase())),
+  const filtered = useMemo(
+    () =>
+      products.filter(
+        (p) =>
+          (active === "All" || p.category === active) &&
+          (q === "" || p.name.toLowerCase().includes(q.toLowerCase())),
+      ),
+    [active, q],
   );
+
+  // Reset pagination when filter or query changes
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [active, q]);
+
+  const shown = filtered.slice(0, visible);
+  const hasMore = visible < filtered.length;
 
   return (
     <div>
