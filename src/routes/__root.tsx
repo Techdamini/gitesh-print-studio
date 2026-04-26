@@ -31,10 +31,16 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Gitesh Enterprises — Premium Printing in Ludhiana" },
-      { name: "description", content: "Flex, LED boards, ID cards, trophies & custom prints in Ludhiana." },
+      { name: "description", content: "Flex, LED boards, ID cards, trophies & custom prints in Ludhiana. theme is colourful with printier pictures" },
       { name: "author", content: "Gitesh Enterprises" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Gitesh Enterprises — Premium Printing in Ludhiana" },
+      { name: "twitter:title", content: "Gitesh Enterprises — Premium Printing in Ludhiana" },
+      { property: "og:description", content: "Flex, LED boards, ID cards, trophies & custom prints in Ludhiana. theme is colourful with printier pictures" },
+      { name: "twitter:description", content: "Flex, LED boards, ID cards, trophies & custom prints in Ludhiana. theme is colourful with printier pictures" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/93ee600e-27bd-4ee7-b1a7-c11fd239599c" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/93ee600e-27bd-4ee7-b1a7-c11fd239599c" },
     ],
     links: [
       {
