@@ -1,62 +1,87 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { products } from "@/lib/products";
+import { Reveal } from "@/components/site/Reveal";
+import { Lightbox, type LightboxItem } from "@/components/site/Lightbox";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
       { title: "Gallery — Gitesh Enterprises" },
-      { name: "description", content: "Browse our portfolio of printed flex, LED boards, ID cards and more." },
+      { name: "description", content: "Browse a portfolio of printed flex, LED boards, ID cards, trophies and more from our Ludhiana studio." },
       { property: "og:title", content: "Gallery — Gitesh Enterprises" },
-      { property: "og:description", content: "A look at our recent printing work." },
+      { property: "og:description", content: "Recent printing projects delivered across Ludhiana." },
     ],
   }),
   component: GalleryPage,
 });
 
 function GalleryPage() {
-  // Build a varied masonry by repeating product images
-  const items = [...products, ...products.slice(0, 3)];
+  const items = [...products, ...products.slice(0, 4)];
+  const lightboxItems: LightboxItem[] = items.map((p) => ({ src: p.image, caption: `${p.name} — ${p.category}` }));
+  const [active, setActive] = useState<number | null>(null);
+
+  const open = (i: number) => setActive(i);
+  const close = () => setActive(null);
+  const prev = () => setActive((i) => (i === null ? null : (i - 1 + items.length) % items.length));
+  const next = () => setActive((i) => (i === null ? null : (i + 1) % items.length));
 
   return (
-    <div>
-      <section className="border-b border-border bg-muted/30 py-20 md:py-28">
-        <div className="mx-auto max-w-5xl px-4 md:px-8">
-          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Gallery</span>
-          <h1 className="mt-3 font-display text-5xl font-bold tracking-tight md:text-7xl">
-            Our recent <span className="text-gradient">work</span>.
+    <div className="bg-cream">
+      {/* HERO */}
+      <section className="border-b border-border bg-background py-24 md:py-32">
+        <div className="mx-auto max-w-6xl px-4 md:px-8">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">Gallery</span>
+          <h1 className="mt-4 animate-slide-up font-display text-6xl leading-[0.95] tracking-tight md:text-8xl">
+            Our work speaks <span className="font-serif-italic text-gold">for itself</span>.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            A small slice of the printing we’ve delivered for happy customers across Ludhiana.
+          <p className="mt-6 max-w-2xl animate-slide-up delay-100 text-lg text-muted-foreground md:text-xl">
+            Explore some of our finest printing projects delivered across Ludhiana — flex hoardings, glow boards, ID cards, trophies and more.
+          </p>
+          <p className="mt-4 animate-slide-up delay-200 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            Click any image to open the lightbox
           </p>
         </div>
       </section>
 
+      {/* MASONRY GRID */}
       <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+        <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
           {items.map((p, i) => (
-            <figure
+            <Reveal
               key={`${p.slug}-${i}`}
-              className="group mb-4 overflow-hidden rounded-2xl border border-border bg-card break-inside-avoid"
-              style={{ animation: `slide-up 0.7s both ${i * 60}ms` }}
+              as="figure"
+              delay={(i % 9) * 60}
+              className="mb-5 break-inside-avoid"
             >
-              <div className="overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-              <figcaption className="flex items-center justify-between p-4">
-                <span className="font-semibold">{p.name}</span>
-                <span className="text-xs uppercase tracking-widest text-muted-foreground">{p.category}</span>
-              </figcaption>
-            </figure>
+              <button
+                type="button"
+                onClick={() => open(i)}
+                className="group relative block w-full overflow-hidden rounded-2xl border border-border bg-background text-left transition-all duration-500 hover:-translate-y-1 hover:border-gold hover:shadow-elevated"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                    className="w-full object-cover transition-transform duration-[900ms] group-hover:scale-110"
+                  />
+                </div>
+                {/* overlay */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-3 p-5 text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">{p.category}</div>
+                  <div className="mt-1 font-display text-2xl">{p.name}</div>
+                </figcaption>
+              </button>
+            </Reveal>
           ))}
         </div>
       </section>
+
+      <Lightbox items={lightboxItems} index={active} onClose={close} onPrev={prev} onNext={next} />
     </div>
   );
 }
