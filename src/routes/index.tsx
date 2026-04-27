@@ -187,89 +187,117 @@ function HomePage() {
         </div>
       </section>
 
-      {/* SHOP PREVIEW */}
+      {/* PRODUCT SLIDER */}
       <section className="bg-muted/40 py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Bestsellers</span>
-              <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">From our shop</h2>
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Featured products</span>
+              <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">Shop bestsellers</h2>
             </div>
             <Link to="/shop" className="text-sm font-semibold underline underline-offset-4 hover:no-underline">
               View all products →
             </Link>
           </Reveal>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.slice(0, 4).map((p, i) => (
-              <Reveal key={p.slug} variant="scale" delay={i * 90}>
-                <Link
-                  to="/shop/$slug"
-                  params={{ slug: p.slug }}
-                  className="group block overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated"
-                >
-                  <div className="relative aspect-square overflow-hidden bg-muted">
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      loading="lazy"
-                      width={1024}
-                      height={1024}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <span className="absolute left-3 top-3 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
-                      {p.category}
-                    </span>
+          {currentSlide && (
+            <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
+              <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
+                <Link to="/shop/$slug" params={{ slug: currentSlide.slug }} className="group relative min-h-[360px] overflow-hidden bg-muted md:min-h-[520px]">
+                  <img
+                    src={currentSlide.image}
+                    alt={currentSlide.name}
+                    width={1200}
+                    height={900}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </Link>
+                <div className="flex flex-col justify-center p-8 md:p-12">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{currentSlide.category}</span>
+                  <h3 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">{currentSlide.name}</h3>
+                  <p className="mt-4 text-muted-foreground">{currentSlide.description}</p>
+                  <div className="mt-6 flex items-baseline gap-2">
+                    <span className="font-display text-3xl font-bold">₹{currentSlide.price}</span>
+                    <span className="text-sm text-muted-foreground">/ {currentSlide.unit}</span>
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-display text-base font-semibold">{p.name}</h3>
-                    <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{p.short}</p>
-                    <div className="mt-3 flex items-baseline gap-1">
-                      <span className="font-display text-lg font-bold">₹{p.price}</span>
-                      <span className="text-xs text-muted-foreground">/ {p.unit}</span>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <a
+                      href={whatsappLink(`Hello Gitesh Enterprises,\nI want to order:\n\nProduct: ${currentSlide.name}\nPlease share payment QR code.`)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:scale-105 hover:shadow-glow"
+                    >
+                      Order Now <ArrowRight className="h-4 w-4" />
+                    </a>
+                    <Link
+                      to="/shop/$slug"
+                      params={{ slug: currentSlide.slug }}
+                      className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-7 py-3.5 text-sm font-semibold transition-all hover:border-primary hover:bg-muted"
+                    >
+                      View details
+                    </Link>
+                  </div>
+                  <div className="mt-10 flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setActiveSlide((s) => (s - 1 + sliderProducts.length) % sliderProducts.length)}
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:bg-muted"
+                      aria-label="Previous product"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveSlide((s) => (s + 1) % sliderProducts.length)}
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:bg-muted"
+                      aria-label="Next product"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                    <div className="ml-2 flex gap-2">
+                      {sliderProducts.map((item, idx) => (
+                        <button
+                          key={item.slug}
+                          type="button"
+                          onClick={() => setActiveSlide(idx)}
+                          aria-label={`Show ${item.name}`}
+                          className={`h-2 rounded-full transition-all ${idx === activeSlide ? "w-8 bg-primary" : "w-2 bg-border hover:bg-muted-foreground"}`}
+                        />
+                      ))}
                     </div>
                   </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* OTHER PRINT-ON-DEMAND CATEGORIES */}
-      <section className="border-y border-border bg-muted/30 py-20 md:py-24">
+      {/* CATEGORY IMAGE CARDS */}
+      <section className="border-y border-border bg-background py-20 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <Reveal className="mb-12 max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Explore More</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Shop by category</span>
             <h2 className="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
-              Other print-on-demand products
+              Real product categories
             </h2>
-            <p className="mt-3 text-muted-foreground">
-              Tap any category to browse matching products in our shop.
-            </p>
+            <p className="mt-3 text-muted-foreground">Open the shop and preview matching products by category.</p>
           </Reveal>
 
-          <div className="grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10">
-            {[
-              { icon: ImageIcon, label: "Posters", to: "/shop", search: "poster" },
-              { icon: Palette, label: "Canvas", to: "/shop", search: "canvas" },
-              { icon: Coffee, label: "Mugs", to: "/shop", search: "mug" },
-              { icon: Shirt, label: "Apparel", to: "/shop", search: "apparel" },
-              { icon: Frame, label: "Framed", to: "/shop", search: "frame" },
-              { icon: Sticker, label: "Stickers", to: "/shop", search: "sticker" },
-              { icon: CreditCard, label: "Cards", to: "/shop", search: "card" },
-              { icon: Smartphone, label: "Phone Cases", to: "/shop", search: "phone" },
-              { icon: BookOpen, label: "Brochures", to: "/shop", search: "brochure" },
-              { icon: Gift, label: "Awards", to: "/shop", search: "trophy" },
-            ].map((c, i) => (
-              <Reveal key={c.label} delay={i * 50} className="group flex flex-col items-center">
-                <Link
-                  to={c.to}
-                  className="flex h-20 w-20 items-center justify-center rounded-full border border-border bg-background shadow-soft transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-elevated md:h-24 md:w-24"
-                  aria-label={c.label}
-                >
-                  <c.icon className="h-7 w-7 md:h-8 md:w-8" />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {categoryCards.map((c, i) => (
+              <Reveal key={c.label} delay={i * 50} className="group">
+                <Link to="/shop" className="block overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated">
+                  <div className="aspect-[4/3] overflow-hidden bg-muted">
+                    <img src={c.image} alt={`${c.label} category`} loading="lazy" width={700} height={520} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-center justify-between font-display text-lg font-bold">
+                      {c.label}
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">{c.preview}</p>
+                  </div>
                 </Link>
-                <span className="mt-3 text-center text-xs font-semibold md:text-sm">{c.label}</span>
               </Reveal>
             ))}
           </div>
