@@ -1,6 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, Printer, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
-import { ADDRESS, EMAIL, GSTIN, PHONE_DISPLAY } from "@/lib/whatsapp";
+import { CreditCard, Mail, MapPin, Phone, Printer, QrCode, Smartphone, WalletCards } from "lucide-react";
+import { ADDRESS, EMAIL, GSTIN, PHONE_DISPLAY, whatsappLink } from "@/lib/whatsapp";
+
+const paymentMethods = [
+  { name: "UPI", icon: QrCode },
+  { name: "PhonePe", icon: Smartphone },
+  { name: "Google Pay", icon: WalletCards },
+  { name: "Paytm", icon: Smartphone },
+  { name: "Visa", icon: CreditCard },
+  { name: "Mastercard", icon: CreditCard },
+];
 
 export function Footer() {
   return (
@@ -18,11 +27,15 @@ export function Footer() {
             All printing solutions in one place — flex, LED boards, ID cards, trophies, and more.
           </p>
           <div className="mt-5 flex gap-3">
-            {[Facebook, Instagram, Linkedin, Twitter].map((Icon, i) => (
+            {[
+              { label: "Call", href: "tel:+918146632476", icon: Phone },
+              { label: "Email", href: `mailto:${EMAIL}`, icon: Mail },
+              { label: "WhatsApp", href: whatsappLink("Hi, I want to contact Gitesh Enterprises"), icon: Smartphone },
+            ].map(({ label, href, icon: Icon }) => (
               <a
-                key={i}
-                href="#"
-                aria-label="Social link"
+                key={label}
+                href={href}
+                aria-label={label}
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all hover:border-white hover:bg-white hover:text-primary"
               >
                 <Icon className="h-4 w-4" />
@@ -65,12 +78,12 @@ export function Footer() {
           <div className="flex flex-col items-center gap-3 md:flex-row md:gap-5">
             <span className="text-xs font-semibold uppercase tracking-widest text-white/50">We accept</span>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {["VISA", "Mastercard", "UPI", "GPay", "Paytm", "RuPay", "COD"].map((p) => (
+              {paymentMethods.map(({ name, icon: Icon }) => (
                 <span
-                  key={p}
-                  className="rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold tracking-wide text-white/80"
+                  key={name}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold tracking-wide text-white/80"
                 >
-                  {p}
+                  <Icon className="h-3.5 w-3.5" /> {name}
                 </span>
               ))}
             </div>

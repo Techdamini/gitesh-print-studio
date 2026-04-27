@@ -5,6 +5,7 @@ export type Product = {
   price: number;
   unit: string;
   image: string;
+  material: string;
   short: string;
   description: string;
   features: string[];
@@ -15,6 +16,25 @@ export type Product = {
 type Cat = "Outdoor" | "Signage" | "Cards" | "Awards" | "Stickers" | "Print" | "Display";
 
 const imageForProduct = (slug: string) => `/shop-products/${slug}.jpg`;
+
+const materialForProduct = (category: Cat, name: string) => {
+  const lower = name.toLowerCase();
+  if (lower.includes("backlit")) return "Translucent backlit flex with LED light-box support";
+  if (lower.includes("vinyl")) return "Premium vinyl media with waterproof adhesive/finish";
+  if (lower.includes("mesh")) return "Perforated outdoor mesh flex";
+  if (lower.includes("eco solvent")) return "Eco-solvent printable premium media";
+  if (lower.includes("led") || lower.includes("glow")) return "Acrylic/flex face, aluminium frame and SMD LED lighting";
+  if (lower.includes("acrylic")) return "Laser-cut acrylic sheet";
+  if (lower.includes("metal")) return "Powder-coated metal sheet";
+  if (lower.includes("wooden")) return "Premium hardwood with engraved metal plate";
+  if (lower.includes("crystal")) return "K9 optical crystal";
+  if (category === "Cards") return "CR80 PVC card stock";
+  if (category === "Awards") return "Acrylic, wood, metal or crystal award material";
+  if (category === "Stickers") return "Waterproof glossy/matte vinyl sticker sheet";
+  if (category === "Print") return "Premium art paper/cardstock";
+  if (category === "Display") return "Aluminium frame with printed flex/fabric panel";
+  return "Premium outdoor flex material";
+};
 
 const make = (
   category: Cat,
@@ -38,6 +58,7 @@ const make = (
     price,
     unit,
     image,
+    material: materialForProduct(category, name),
     short,
     description,
     features,

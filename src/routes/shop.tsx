@@ -1,9 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { products } from "@/lib/products";
-import { Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
+import catAwards from "@/assets/cat-awards.jpg";
+import catCards from "@/assets/cat-cards.jpg";
+import catDisplay from "@/assets/cat-display.jpg";
+import catOutdoor from "@/assets/cat-outdoor.jpg";
+import catPrint from "@/assets/cat-print.jpg";
+import catSignage from "@/assets/cat-signage.jpg";
+import catStickers from "@/assets/cat-stickers.jpg";
 
 const PAGE_SIZE = 12;
+
+const categoryImages: Record<string, string> = {
+  Outdoor: catOutdoor,
+  Signage: catSignage,
+  Cards: catCards,
+  Awards: catAwards,
+  Stickers: catStickers,
+  Print: catPrint,
+  Display: catDisplay,
+};
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -51,22 +68,46 @@ function ShopPage() {
             Tap any product to see details, pick a custom size and order via WhatsApp.
           </p>
 
-          <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-wrap gap-2">
-              {cats.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setActive(c)}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                    active === c
-                      ? "bg-primary text-primary-foreground"
-                      : "border border-border bg-background hover:border-primary"
-                  }`}
-                >
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
+            {cats.filter((c) => c !== "All").map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setActive(c)}
+                className={`group overflow-hidden rounded-2xl border bg-card text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated ${
+                  active === c ? "border-primary ring-2 ring-ring/10" : "border-border"
+                }`}
+              >
+                <span className="block aspect-[4/3] overflow-hidden bg-muted">
+                  <img
+                    src={categoryImages[c]}
+                    alt={`${c} products`}
+                    loading="lazy"
+                    width={600}
+                    height={450}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </span>
+                <span className="flex items-center justify-between px-4 py-3 text-sm font-semibold">
                   {c}
-                </button>
-              ))}
-            </div>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <button
+              type="button"
+              onClick={() => setActive("All")}
+              className={`w-fit rounded-full px-4 py-2 text-sm font-medium transition-all ${
+                active === "All"
+                  ? "bg-primary text-primary-foreground"
+                  : "border border-border bg-background hover:border-primary"
+              }`}
+            >
+              Show all products
+            </button>
             <div className="relative w-full md:w-72">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
@@ -95,14 +136,12 @@ function ShopPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {shown.map((p, i) => (
-            <Link
+            <article
               key={p.slug}
-              to="/shop/$slug"
-              params={{ slug: p.slug }}
               className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-elevated animate-slide-up"
               style={{ animationDelay: `${(i % PAGE_SIZE) * 40}ms` }}
             >
-              <div className="relative aspect-square overflow-hidden bg-muted">
+              <Link to="/shop/$slug" params={{ slug: p.slug }} className="relative block aspect-square overflow-hidden bg-muted">
                 <img
                   src={p.image}
                   alt={p.name}
@@ -114,21 +153,30 @@ function ShopPage() {
                 <span className="absolute left-3 top-3 rounded-full bg-primary/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground backdrop-blur">
                   {p.category}
                 </span>
-              </div>
+              </Link>
               <div className="p-5">
-                <h3 className="font-display text-base font-semibold">{p.name}</h3>
+                <h3 className="font-display text-base font-semibold">
+                  <Link to="/shop/$slug" params={{ slug: p.slug }} className="hover:underline">
+                    {p.name}
+                  </Link>
+                </h3>
                 <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{p.short}</p>
                 <div className="mt-4 flex items-baseline justify-between">
                   <div>
                     <span className="font-display text-xl font-bold">₹{p.price}</span>
                     <span className="ml-1 text-xs text-muted-foreground">/ {p.unit}</span>
                   </div>
-                  <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground">
+                  <Link
+                    to="/shop/$slug"
+                    params={{ slug: p.slug }}
+                    preload="intent"
+                    className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-all hover:scale-105 hover:shadow-soft"
+                  >
                     View →
-                  </span>
+                  </Link>
                 </div>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
 
