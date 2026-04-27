@@ -101,6 +101,8 @@ const podItems = [
   { label: "Letterheads", image: podLetterheads },
   { label: "Caps", image: podCaps },
 ];
+
+function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [activeSlide, setActiveSlide] = useState(0);
