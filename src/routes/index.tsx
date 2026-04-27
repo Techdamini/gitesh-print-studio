@@ -1,7 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, BadgeCheck, Clock, Sparkles, Tag, Truck, Star, Quote, Image as ImageIcon, Frame, Coffee, Shirt, Sticker, CreditCard, Smartphone, BookOpen, Gift, Palette } from "lucide-react";
+import { ArrowRight, BadgeCheck, ChevronLeft, ChevronRight, Clock, Quote, Sparkles, Star, Tag, Truck } from "lucide-react";
 import hero from "@/assets/hero-printing.jpg";
+import catAwards from "@/assets/cat-awards.jpg";
+import catCards from "@/assets/cat-cards.jpg";
+import catDisplay from "@/assets/cat-display.jpg";
+import catOutdoor from "@/assets/cat-outdoor.jpg";
+import catPrint from "@/assets/cat-print.jpg";
+import catSignage from "@/assets/cat-signage.jpg";
+import catStickers from "@/assets/cat-stickers.jpg";
 import { AnimatedTagline } from "@/components/site/AnimatedTagline";
 import { Reveal } from "@/components/site/Reveal";
 import { products } from "@/lib/products";
