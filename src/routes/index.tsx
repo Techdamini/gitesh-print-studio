@@ -81,7 +81,26 @@ const categoryCards = [
   { label: "Display", image: catDisplay, preview: "Standees, exhibition stands and backdrops" },
 ];
 
-function HomePage() {
+const podItems = [
+  { label: "Posters", image: podPosters },
+  { label: "Canvas", image: podCanvas },
+  { label: "Mugs", image: podMugs },
+  { label: "Apparel", image: podApparel },
+  { label: "Framed Posters", image: podFramed },
+  { label: "Embroidery", image: podEmbroidery },
+  { label: "Phone Cases", image: podPhone },
+  { label: "Face Masks", image: podMasks },
+  { label: "Stickers", image: podStickers },
+  { label: "Keychains", image: podKeychains },
+  { label: "Documents", image: podDocuments },
+  { label: "Business Cards", image: podCards },
+  { label: "Bottles", image: podBottles },
+  { label: "Notebooks", image: podNotebooks },
+  { label: "Tote Bags", image: podTotes },
+  { label: "Calendars", image: podCalendars },
+  { label: "Letterheads", image: podLetterheads },
+  { label: "Caps", image: podCaps },
+];
   const heroRef = useRef<HTMLDivElement>(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [activeSlide, setActiveSlide] = useState(0);
