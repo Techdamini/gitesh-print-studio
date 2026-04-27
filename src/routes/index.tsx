@@ -343,6 +343,56 @@ function HomePage() {
         </div>
       </section>
 
+      {/* PRINT ON DEMAND PRODUCTS */}
+      <section className="bg-cream py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <Reveal className="mb-12 max-w-2xl">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">Print on demand</span>
+            <h2 className="mt-3 font-display text-5xl leading-[1.05] md:text-6xl">
+              Print on demand <span className="font-serif-italic text-gold">products</span>.
+            </h2>
+            <p className="mt-4 text-muted-foreground">From a single mug to a thousand business cards — pick a product, send your design, get it printed.</p>
+          </Reveal>
+
+          <div className="grid grid-cols-3 gap-6 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+            {podItems.map((item, i) => (
+              <Reveal
+                key={item.label}
+                delay={(i % 12) * 40}
+                variant="scale"
+                className="group flex flex-col items-center text-center"
+              >
+                <Link to="/shop" className="block w-full">
+                  <div className="relative aspect-square overflow-hidden rounded-full border border-border bg-background shadow-soft transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-105 group-hover:border-gold group-hover:shadow-elevated hover-glow-gold">
+                    <img
+                      src={item.image}
+                      alt={item.label}
+                      loading="lazy"
+                      width={400}
+                      height={400}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </div>
+                  <div className="mt-3 font-display text-sm leading-tight transition-colors group-hover:text-gold md:text-base">
+                    {item.label}
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-14 text-center">
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:scale-105 hover:shadow-glow"
+            >
+              Browse all products <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* TESTIMONIALS */}
       <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
         <Reveal className="mb-14 max-w-2xl">
