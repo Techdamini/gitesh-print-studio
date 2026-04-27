@@ -5,7 +5,7 @@ import { getProduct, products } from "@/lib/products";
 import { whatsappLink } from "@/lib/whatsapp";
 import { useCart } from "@/lib/cart";
 
-export const Route = createFileRoute("/shop/$slug")({
+export const Route = createFileRoute("/shop_/$slug")({
   loader: ({ params }) => {
     const product = getProduct(params.slug);
     if (!product) throw notFound();
