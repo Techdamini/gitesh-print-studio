@@ -48,7 +48,7 @@ function ProductPage() {
   const [customH, setCustomH] = useState("");
   const [qty, setQty] = useState(1);
 
-  const related = products.filter((p) => p.slug !== product.slug).slice(0, 4);
+  const related = products.filter((p) => p.slug !== product.slug && p.category === product.category).slice(0, 4);
 
   const resolvedSize =
     preset === "Custom"
@@ -59,15 +59,17 @@ function ProductPage() {
 
   const buyNowMessage = [
     "Hello Gitesh Enterprises,",
-    "I want to order the following product:",
+    "I want to order:",
     "",
-    `Product Name: ${product.name}`,
+    `Product: ${product.name}`,
     `Size: ${resolvedSize}`,
     `Quantity: ${qty}`,
-    `Price: ₹${product.price} / ${product.unit}`,
+    `Price: ₹${product.price * qty} (${product.price} / ${product.unit})`,
     "",
     "Please share payment QR code.",
   ].join("\n");
+
+  const enquiryMessage = `Hi, I want more details about ${product.name}`;
 
   const handleAddToCart = () => {
     add({
@@ -111,12 +113,23 @@ function ProductPage() {
             <div className="mt-6 flex items-baseline gap-3">
               <span className="font-display text-4xl font-bold">₹{product.price}</span>
               <span className="text-sm text-muted-foreground">per {product.unit}</span>
-              <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-[oklch(0.65_0.18_145)]/10 px-3 py-1 text-xs font-semibold text-[oklch(0.45_0.18_145)]">
+              <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-whatsapp/10 px-3 py-1 text-xs font-semibold text-whatsapp">
                 <Truck className="h-3 w-3" /> Fast Delivery
               </span>
             </div>
 
             <p className="mt-6 text-base leading-relaxed text-muted-foreground">{product.description}</p>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-muted/30 p-4">
+                <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Material used</div>
+                <div className="mt-2 text-sm font-semibold">{product.material}</div>
+              </div>
+              <div className="rounded-2xl border border-border bg-muted/30 p-4">
+                <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Custom size</div>
+                <div className="mt-2 text-sm font-semibold">Available for every order</div>
+              </div>
+            </div>
 
             <ul className="mt-6 grid gap-2 sm:grid-cols-2">
               {product.features.map((f) => (
@@ -188,7 +201,15 @@ function ProductPage() {
                 rel="noreferrer"
                 className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:scale-105 hover:shadow-glow"
               >
-                <MessageCircle className="h-4 w-4" /> Buy Now on WhatsApp
+                <MessageCircle className="h-4 w-4" /> Order Now
+              </a>
+              <a
+                href={whatsappLink(enquiryMessage)}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-7 py-3.5 text-sm font-semibold transition-all hover:border-primary hover:bg-muted"
+              >
+                Enquiry
               </a>
             </div>
 
@@ -201,7 +222,20 @@ function ProductPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8">
-        <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">You might also like</h2>
+        <div className="mb-12 grid gap-8 border-y border-border py-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">About this product</span>
+            <h2 className="mt-2 font-display text-3xl font-bold tracking-tight">Built for real business use</h2>
+          </div>
+          <div className="space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
+            <p>{product.description}</p>
+            <p>
+              Each {product.name.toLowerCase()} order is prepared with {product.material.toLowerCase()} and checked for print clarity, finishing, and durability before handover.
+            </p>
+          </div>
+        </div>
+
+        <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">More in {product.category}</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {related.map((p) => (
             <Link
