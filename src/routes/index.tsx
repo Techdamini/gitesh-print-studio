@@ -9,6 +9,24 @@ import catOutdoor from "@/assets/cat-outdoor.jpg";
 import catPrint from "@/assets/cat-print.jpg";
 import catSignage from "@/assets/cat-signage.jpg";
 import catStickers from "@/assets/cat-stickers.jpg";
+import podPosters from "@/assets/pod/posters.jpg";
+import podCanvas from "@/assets/pod/canvas.jpg";
+import podMugs from "@/assets/pod/mugs.jpg";
+import podApparel from "@/assets/pod/apparel.jpg";
+import podFramed from "@/assets/pod/framed-posters.jpg";
+import podEmbroidery from "@/assets/pod/embroidery.jpg";
+import podPhone from "@/assets/pod/phone-cases.jpg";
+import podMasks from "@/assets/pod/face-masks.jpg";
+import podStickers from "@/assets/pod/stickers.jpg";
+import podKeychains from "@/assets/pod/keychains.jpg";
+import podDocuments from "@/assets/pod/documents.jpg";
+import podCards from "@/assets/pod/business-cards.jpg";
+import podBottles from "@/assets/pod/bottles.jpg";
+import podNotebooks from "@/assets/pod/notebooks.jpg";
+import podTotes from "@/assets/pod/tote-bags.jpg";
+import podCalendars from "@/assets/pod/calendars.jpg";
+import podLetterheads from "@/assets/pod/letterheads.jpg";
+import podCaps from "@/assets/pod/caps.jpg";
 import { AnimatedTagline } from "@/components/site/AnimatedTagline";
 import { Reveal } from "@/components/site/Reveal";
 import { products } from "@/lib/products";
@@ -61,6 +79,27 @@ const categoryCards = [
   { label: "Stickers", image: catStickers, preview: "Custom, vinyl, logo and waterproof stickers" },
   { label: "Print", image: catPrint, preview: "Posters, brochures, flyers and visiting cards" },
   { label: "Display", image: catDisplay, preview: "Standees, exhibition stands and backdrops" },
+];
+
+const podItems = [
+  { label: "Posters", image: podPosters },
+  { label: "Canvas", image: podCanvas },
+  { label: "Mugs", image: podMugs },
+  { label: "Apparel", image: podApparel },
+  { label: "Framed Posters", image: podFramed },
+  { label: "Embroidery", image: podEmbroidery },
+  { label: "Phone Cases", image: podPhone },
+  { label: "Face Masks", image: podMasks },
+  { label: "Stickers", image: podStickers },
+  { label: "Keychains", image: podKeychains },
+  { label: "Documents", image: podDocuments },
+  { label: "Business Cards", image: podCards },
+  { label: "Bottles", image: podBottles },
+  { label: "Notebooks", image: podNotebooks },
+  { label: "Tote Bags", image: podTotes },
+  { label: "Calendars", image: podCalendars },
+  { label: "Letterheads", image: podLetterheads },
+  { label: "Caps", image: podCaps },
 ];
 
 function HomePage() {
@@ -300,6 +339,56 @@ function HomePage() {
                 </Link>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRINT ON DEMAND PRODUCTS */}
+      <section className="bg-cream py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <Reveal className="mb-12 max-w-2xl">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">Print on demand</span>
+            <h2 className="mt-3 font-display text-5xl leading-[1.05] md:text-6xl">
+              Print on demand <span className="font-serif-italic text-gold">products</span>.
+            </h2>
+            <p className="mt-4 text-muted-foreground">From a single mug to a thousand business cards — pick a product, send your design, get it printed.</p>
+          </Reveal>
+
+          <div className="grid grid-cols-3 gap-6 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+            {podItems.map((item, i) => (
+              <Reveal
+                key={item.label}
+                delay={(i % 12) * 40}
+                variant="scale"
+                className="group flex flex-col items-center text-center"
+              >
+                <Link to="/shop" className="block w-full">
+                  <div className="relative aspect-square overflow-hidden rounded-full border border-border bg-background shadow-soft transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-105 group-hover:border-gold group-hover:shadow-elevated hover-glow-gold">
+                    <img
+                      src={item.image}
+                      alt={item.label}
+                      loading="lazy"
+                      width={400}
+                      height={400}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </div>
+                  <div className="mt-3 font-display text-sm leading-tight transition-colors group-hover:text-gold md:text-base">
+                    {item.label}
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-14 text-center">
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:scale-105 hover:shadow-glow"
+            >
+              Browse all products <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
