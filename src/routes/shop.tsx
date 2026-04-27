@@ -136,14 +136,12 @@ function ShopPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {shown.map((p, i) => (
-            <Link
+            <article
               key={p.slug}
-              to="/shop/$slug"
-              params={{ slug: p.slug }}
               className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-elevated animate-slide-up"
               style={{ animationDelay: `${(i % PAGE_SIZE) * 40}ms` }}
             >
-              <div className="relative aspect-square overflow-hidden bg-muted">
+              <Link to="/shop/$slug" params={{ slug: p.slug }} className="relative block aspect-square overflow-hidden bg-muted">
                 <img
                   src={p.image}
                   alt={p.name}
@@ -155,21 +153,30 @@ function ShopPage() {
                 <span className="absolute left-3 top-3 rounded-full bg-primary/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground backdrop-blur">
                   {p.category}
                 </span>
-              </div>
+              </Link>
               <div className="p-5">
-                <h3 className="font-display text-base font-semibold">{p.name}</h3>
+                <h3 className="font-display text-base font-semibold">
+                  <Link to="/shop/$slug" params={{ slug: p.slug }} className="hover:underline">
+                    {p.name}
+                  </Link>
+                </h3>
                 <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{p.short}</p>
                 <div className="mt-4 flex items-baseline justify-between">
                   <div>
                     <span className="font-display text-xl font-bold">₹{p.price}</span>
                     <span className="ml-1 text-xs text-muted-foreground">/ {p.unit}</span>
                   </div>
-                  <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground">
+                  <Link
+                    to="/shop/$slug"
+                    params={{ slug: p.slug }}
+                    preload="intent"
+                    className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-all hover:scale-105 hover:shadow-soft"
+                  >
                     View →
-                  </span>
+                  </Link>
                 </div>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
 
