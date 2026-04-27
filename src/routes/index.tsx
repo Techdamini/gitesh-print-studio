@@ -49,29 +49,31 @@ const testimonials = [
   { name: "Amit Singh", role: "Singh Garments", rating: 5, text: "Their flex banners are super crisp. Best printing rates I’ve found in Ludhiana." },
 ];
 
+const sliderProducts = ["flex-banner-printing", "led-glow-sign-board", "school-id-cards", "trophy-designs"]
+  .map((slug) => products.find((p) => p.slug === slug))
+  .filter((p): p is (typeof products)[number] => Boolean(p));
+
+const categoryCards = [
+  { label: "Outdoor", image: catOutdoor, preview: "Flex banners, hoardings, backlit prints" },
+  { label: "Signage", image: catSignage, preview: "LED boards, acrylic signs, name plates" },
+  { label: "Cards", image: catCards, preview: "School, corporate, PVC and visitor cards" },
+  { label: "Awards", image: catAwards, preview: "Trophies, acrylic, wooden and crystal awards" },
+  { label: "Stickers", image: catStickers, preview: "Custom, vinyl, logo and waterproof stickers" },
+  { label: "Print", image: catPrint, preview: "Posters, brochures, flyers and visiting cards" },
+  { label: "Display", image: catDisplay, preview: "Standees, exhibition stands and backdrops" },
+];
+
 function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [offsetY, setOffsetY] = useState(0);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const el = heroRef.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-        setOffsetY(window.scrollY);
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
+    const timer = window.setInterval(() => setActiveSlide((current) => (current + 1) % sliderProducts.length), 4200);
+    return () => window.clearInterval(timer);
   }, []);
+
+  const currentSlide = sliderProducts[activeSlide % sliderProducts.length];
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -94,7 +96,7 @@ function HomePage() {
           alt="Industrial printing press"
           className="absolute inset-0 h-[115%] w-full object-cover opacity-50 will-change-transform transition-transform duration-300 ease-out"
           style={{
-            transform: `translate3d(${mouse.x * 14}px, ${offsetY * 0.25 + mouse.y * 14}px, 0) scale(1.05)`,
+            transform: `translate3d(${mouse.x * 14}px, ${mouse.y * 14}px, 0) scale(1.05)`,
           }}
           width={1920}
           height={1080}
