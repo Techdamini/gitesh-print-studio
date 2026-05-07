@@ -374,19 +374,20 @@ function FormCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="group rounded-3xl border border-border bg-background p-6 shadow-soft transition-all hover:shadow-elevated md:p-9">
-      <div className="mb-6 flex items-center gap-4 border-b border-border pb-5">
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-background">
+    <div className="group relative overflow-hidden rounded-3xl border border-border bg-background/80 p-6 shadow-soft backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:shadow-elevated md:p-9">
+      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gold/10 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="relative mb-6 flex items-center gap-4 border-b border-border pb-5">
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-foreground to-neutral-700 text-background shadow-soft">
           {icon}
         </div>
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
             Step {step}
           </div>
           <h2 className="font-display text-2xl leading-tight md:text-3xl">{title}</h2>
         </div>
       </div>
-      {children}
+      <div className="relative">{children}</div>
     </div>
   );
 }
