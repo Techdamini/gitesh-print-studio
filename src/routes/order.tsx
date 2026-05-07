@@ -4,6 +4,7 @@ import { MessageCircle, Send, Upload, X, FileText, User, Package, Pencil } from 
 import { products } from "@/lib/products";
 import { whatsappLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/site/Reveal";
+import heroOrder from "@/assets/hero-order.jpg";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
@@ -75,21 +76,30 @@ Please share payment QR code.`;
   return (
     <div className="bg-cream">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border bg-background py-20 md:py-28">
-        <div className="absolute inset-0 -z-10 opacity-[0.04] [background-image:radial-gradient(var(--ink)_1px,transparent_1px)] [background-size:24px_24px]" />
-        <div className="mx-auto max-w-5xl px-4 md:px-8">
+      <section className="relative isolate overflow-hidden border-b border-border bg-ink py-24 text-white md:py-36">
+        <img
+          src={heroOrder}
+          alt="Print order workstation"
+          width={1920}
+          height={1080}
+          className="absolute inset-0 h-full w-full object-cover opacity-50"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/70 to-ink" />
+        <div className="absolute -right-32 -top-20 h-96 w-96 rounded-full bg-gold/25 blur-[140px]" />
+        <div className="absolute -left-32 bottom-0 h-80 w-80 rounded-full bg-amber-500/10 blur-[120px]" />
+        <div className="relative mx-auto max-w-5xl px-4 md:px-8">
           <Reveal>
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/80 backdrop-blur">
               Order / Quote
             </span>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mt-4 font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
-              Place Your <em className="font-display italic text-[oklch(0.74_0.12_80)]">Order</em>
+            <h1 className="mt-6 font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
+              Place Your <em className="font-display italic text-gold">Order</em>
             </h1>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+            <p className="mt-6 max-w-2xl text-lg text-white/70">
               Custom printing made easy — share your requirements and get started instantly.
             </p>
           </Reveal>
