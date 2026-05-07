@@ -22,12 +22,12 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/95 text-white backdrop-blur-xl supports-[backdrop-filter]:bg-ink/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
         <Link to="/" className="group flex items-center gap-2">
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-transform group-hover:rotate-[-6deg]">
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gold text-ink transition-transform group-hover:rotate-[-6deg]">
             <Printer className="h-4 w-4" />
-            <span className="absolute inset-0 rounded-lg bg-primary/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="absolute inset-0 rounded-lg bg-gold/40 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
           </span>
-          <span className="font-display text-lg font-bold tracking-tight">
-            Gitesh<span className="text-muted-foreground"> Enterprises</span>
+          <span className="font-display text-lg font-bold tracking-tight text-white">
+            Gitesh<span className="text-white/60"> Enterprises</span>
           </span>
         </Link>
 
