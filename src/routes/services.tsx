@@ -132,12 +132,21 @@ function ServicesPage() {
           <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">How our service works</span>
           <h2 className="mt-3 font-display text-5xl leading-[1.05] md:text-6xl">From idea to <span className="font-serif-italic text-gold">delivery</span> in 4 steps.</h2>
         </Reveal>
-        <div className="grid gap-px bg-border md:grid-cols-4">
+        <div className="relative grid gap-5 md:grid-cols-4">
+          {/* connecting timeline line */}
+          <div className="pointer-events-none absolute left-0 right-0 top-12 hidden h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent md:block" />
           {steps.map((s, i) => (
-            <Reveal key={s.title} delay={i * 100} className="group bg-background p-8 transition-colors hover:bg-cream">
-              <div className="font-display text-6xl text-gold/70 transition-colors group-hover:text-gold">0{i + 1}</div>
-              <s.icon className="mt-5 h-6 w-6 text-foreground" />
-              <h3 className="mt-4 font-display text-2xl">{s.title}</h3>
+            <Reveal
+              key={s.title}
+              delay={i * 120}
+              className="group relative rounded-2xl border border-border bg-background p-8 transition-all duration-500 hover:-translate-y-2 hover:border-gold hover:shadow-elevated hover-glow-gold"
+            >
+              <div className="relative mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-gold to-amber-500 text-ink shadow-glow">
+                <s.icon className="h-5 w-5" />
+                <span className="absolute inset-0 rounded-full bg-gold/40 blur-md opacity-60 motion-safe:animate-pulse" />
+              </div>
+              <div className="font-display text-6xl leading-none text-gold/80 transition-colors group-hover:text-gold">0{i + 1}</div>
+              <h3 className="mt-3 font-display text-2xl">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
             </Reveal>
           ))}
