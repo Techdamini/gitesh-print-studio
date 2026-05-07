@@ -37,11 +37,11 @@ export function Header() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="group relative rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "!text-foreground" }}
+              className="group relative rounded-md px-3 py-2 text-sm font-medium text-white/70 transition-colors hover:text-white"
+              activeProps={{ className: "!text-gold" }}
             >
               {item.label}
-              <span className="absolute inset-x-3 bottom-1 h-px origin-left scale-x-0 bg-foreground transition-transform group-hover:scale-x-100 group-data-[status=active]:scale-x-100" />
+              <span className="absolute inset-x-3 bottom-1 h-px origin-left scale-x-0 bg-gold transition-transform group-hover:scale-x-100 group-data-[status=active]:scale-x-100" />
             </Link>
           ))}
         </nav>
