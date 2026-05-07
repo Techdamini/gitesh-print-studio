@@ -1,8 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Award, Users, Factory, Heart, Pencil, Printer, Truck, ShieldCheck, Sparkles, Quote } from "lucide-react";
+import { ArrowRight, Award, Users, Factory, Heart, Pencil, Printer, Truck, Quote } from "lucide-react";
 import aboutHero from "@/assets/about-hero.jpg";
 import aboutStory from "@/assets/about-story.jpg";
 import aboutMission from "@/assets/about-mission.jpg";
+import whyQuality from "@/assets/why/quality.jpg";
+import whyDesign from "@/assets/why/design.jpg";
+import whyDelivery from "@/assets/why/delivery.jpg";
+import whyPricing from "@/assets/why/pricing.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
 import { whatsappLink } from "@/lib/whatsapp";
@@ -29,10 +33,10 @@ const stats = [
 ];
 
 const whyUs = [
-  { icon: ShieldCheck, title: "Quality Materials", text: "Premium 440 GSM flex, K9 crystal, brushed brass — sourced and tested in-house." },
-  { icon: Sparkles, title: "Sharp Design", text: "Free design refinement on every order — typography that actually reads." },
-  { icon: Truck, title: "On-time Delivery", text: "Same-day to 48-hour turnaround across Ludhiana, no excuses." },
-  { icon: Heart, title: "Honest Pricing", text: "Transparent per-piece rates. No hidden charges, ever." },
+  { image: whyQuality, title: "Quality Materials", text: "Premium 440 GSM flex, K9 crystal, brushed brass — sourced and tested in-house." },
+  { image: whyDesign, title: "Sharp Design", text: "Free design refinement on every order — typography that actually reads." },
+  { image: whyDelivery, title: "On-time Delivery", text: "Same-day to 48-hour turnaround across Ludhiana, no excuses." },
+  { image: whyPricing, title: "Honest Pricing", text: "Transparent per-piece rates. No hidden charges, ever." },
 ];
 
 const process = [
