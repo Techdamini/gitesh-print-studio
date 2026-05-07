@@ -3,6 +3,7 @@ import { ArrowRight, MessageCircle, Pencil, Printer, Truck } from "lucide-react"
 import { Reveal } from "@/components/site/Reveal";
 import { whatsappLink } from "@/lib/whatsapp";
 
+import heroServices from "@/assets/hero-services.jpg";
 import svcFlex from "@/assets/services/flex-printing.jpg";
 import svcCustom from "@/assets/services/custom-prints.jpg";
 import catSignage from "@/assets/cat-signage.jpg";
@@ -51,13 +52,25 @@ function ServicesPage() {
   return (
     <div className="bg-cream">
       {/* HERO */}
-      <section className="border-b border-border bg-background py-24 md:py-32">
-        <div className="mx-auto max-w-6xl px-4 md:px-8">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">Services</span>
-          <h1 className="mt-4 font-display text-6xl leading-[0.95] tracking-tight md:text-8xl">
+      <section className="relative isolate overflow-hidden border-b border-border bg-ink text-white">
+        <img
+          src={heroServices}
+          alt="Large format printing press in motion"
+          width={1920}
+          height={1080}
+          className="absolute inset-0 h-full w-full object-cover opacity-50 [transform:scale(1.05)] motion-safe:animate-[float_18s_ease-in-out_infinite]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/70 to-ink" />
+        <div className="absolute inset-0 grid-bg opacity-20" />
+        <div className="absolute -right-32 top-10 h-96 w-96 rounded-full bg-gold/20 blur-[120px]" />
+        <div className="relative mx-auto max-w-6xl px-4 py-28 md:px-8 md:py-40">
+          <span className="inline-flex animate-slide-up items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.3em] text-white/80 backdrop-blur">
+            Services
+          </span>
+          <h1 className="mt-6 animate-slide-up delay-100 font-display text-6xl leading-[0.95] tracking-tight md:text-8xl">
             Everything <span className="font-serif-italic text-gold">printable</span>.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
+          <p className="mt-6 max-w-2xl animate-slide-up delay-200 text-lg text-white/70 md:text-xl">
             One studio, every printing solution. Browse our full range below — or jump straight to the shop to see prices and order.
           </p>
         </div>
@@ -119,12 +132,21 @@ function ServicesPage() {
           <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">How our service works</span>
           <h2 className="mt-3 font-display text-5xl leading-[1.05] md:text-6xl">From idea to <span className="font-serif-italic text-gold">delivery</span> in 4 steps.</h2>
         </Reveal>
-        <div className="grid gap-px bg-border md:grid-cols-4">
+        <div className="relative grid gap-5 md:grid-cols-4">
+          {/* connecting timeline line */}
+          <div className="pointer-events-none absolute left-0 right-0 top-12 hidden h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent md:block" />
           {steps.map((s, i) => (
-            <Reveal key={s.title} delay={i * 100} className="group bg-background p-8 transition-colors hover:bg-cream">
-              <div className="font-display text-6xl text-gold/70 transition-colors group-hover:text-gold">0{i + 1}</div>
-              <s.icon className="mt-5 h-6 w-6 text-foreground" />
-              <h3 className="mt-4 font-display text-2xl">{s.title}</h3>
+            <Reveal
+              key={s.title}
+              delay={i * 120}
+              className="group relative rounded-2xl border border-border bg-background p-8 transition-all duration-500 hover:-translate-y-2 hover:border-gold hover:shadow-elevated hover-glow-gold"
+            >
+              <div className="relative mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-gold to-amber-500 text-ink shadow-glow">
+                <s.icon className="h-5 w-5" />
+                <span className="absolute inset-0 rounded-full bg-gold/40 blur-md opacity-60 motion-safe:animate-pulse" />
+              </div>
+              <div className="font-display text-6xl leading-none text-gold/80 transition-colors group-hover:text-gold">0{i + 1}</div>
+              <h3 className="mt-3 font-display text-2xl">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
             </Reveal>
           ))}
