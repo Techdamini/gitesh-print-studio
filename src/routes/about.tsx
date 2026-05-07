@@ -151,14 +151,25 @@ function AboutPage() {
               key={w.title}
               variant="scale"
               delay={i * 100}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-background p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold hover-glow-gold"
+              className="group relative overflow-hidden rounded-2xl border border-border bg-background transition-all duration-500 hover:-translate-y-2 hover:border-gold hover-glow-gold"
             >
-              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg border border-border text-foreground transition-colors group-hover:border-gold group-hover:text-gold">
-                <w.icon className="h-5 w-5" />
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={w.image}
+                  alt={w.title}
+                  loading="lazy"
+                  width={800}
+                  height={600}
+                  className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-110"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-gold/0 via-transparent to-gold/0 transition-all duration-700 group-hover:from-gold/30 group-hover:to-transparent" />
               </div>
-              <h3 className="font-display text-2xl leading-tight">{w.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{w.text}</p>
-              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/10 transition-transform duration-700 group-hover:scale-150" />
+              <div className="p-6">
+                <h3 className="font-display text-2xl leading-tight">{w.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{w.text}</p>
+              </div>
+              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/10 blur-2xl transition-transform duration-700 group-hover:scale-150" />
             </Reveal>
           ))}
         </div>
