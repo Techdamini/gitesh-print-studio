@@ -50,25 +50,25 @@ export function Header() {
           <button
             onClick={openCart}
             aria-label="Open cart"
-            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:bg-muted"
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
           >
             <ShoppingBag className="h-4 w-4" />
             {count > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-bold text-ink">
                 {count}
               </span>
             )}
           </button>
           <Link
             to="/order"
-            className="hidden md:inline-flex h-10 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:scale-105 hover:shadow-glow"
+            className="hidden md:inline-flex h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-ink shadow-soft transition-all hover:scale-105 hover:shadow-glow"
           >
             Get a Quote
           </Link>
           <button
             aria-label="Menu"
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border"
+            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 text-white"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -77,7 +77,7 @@ export function Header() {
 
       <div
         className={cn(
-          "lg:hidden overflow-hidden border-t border-border bg-background transition-[max-height] duration-300",
+          "lg:hidden overflow-hidden border-t border-white/10 bg-ink transition-[max-height] duration-300",
           open ? "max-h-96" : "max-h-0",
         )}
       >
@@ -88,8 +88,8 @@ export function Header() {
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
               onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-3 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
-              activeProps={{ className: "!text-foreground bg-muted" }}
+              className="rounded-md px-3 py-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white"
+              activeProps={{ className: "!text-gold bg-white/5" }}
             >
               {item.label}
             </Link>
