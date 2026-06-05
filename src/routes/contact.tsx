@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Mail, MapPin, Phone, MessageCircle, Clock, Send, ChevronDown } from "lucide-react";
 import { ADDRESS, EMAIL, PHONE_DISPLAY, whatsappLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/site/Reveal";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
