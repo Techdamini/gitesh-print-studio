@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Mail, MapPin, Phone, MessageCircle, Clock, Send, ChevronDown } from "lucide-react";
 import { ADDRESS, EMAIL, PHONE_DISPLAY, whatsappLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/site/Reveal";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -44,8 +45,17 @@ function ContactPage() {
 
 ${form.message || "I'd like to enquire about your printing services."}`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Save enquiry to database (fire-and-forget; UX still opens WhatsApp)
+    void supabase.from("enquiries").insert({
+      name: form.name,
+      phone: form.phone,
+      email: form.email || null,
+      message: form.message,
+      product_type: null,
+      quantity: null,
+    });
     window.open(whatsappLink(formMessage), "_blank");
   };
 

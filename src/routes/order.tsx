@@ -5,6 +5,7 @@ import { products } from "@/lib/products";
 import { whatsappLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/site/Reveal";
 import heroOrder from "@/assets/hero-order.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
@@ -67,9 +68,19 @@ Please share payment QR code.`;
     handleFiles(e.dataTransfer.files);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    // Save order to database (fire-and-forget; user still continues to WhatsApp)
+    void supabase.from("orders").insert({
+      customer_name: form.name,
+      phone: form.phone,
+      email: form.email || null,
+      product: form.product,
+      size: sizeText,
+      quantity: form.qty,
+      notes: form.notes || null,
+    });
     window.open(whatsappLink(message), "_blank");
   };
 
