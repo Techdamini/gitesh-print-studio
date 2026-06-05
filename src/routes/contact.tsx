@@ -44,8 +44,17 @@ function ContactPage() {
 
 ${form.message || "I'd like to enquire about your printing services."}`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Save enquiry to database (fire-and-forget; UX still opens WhatsApp)
+    void supabase.from("enquiries").insert({
+      name: form.name,
+      phone: form.phone,
+      email: form.email || null,
+      message: form.message,
+      product_type: null,
+      quantity: null,
+    });
     window.open(whatsappLink(formMessage), "_blank");
   };
 
