@@ -5,6 +5,7 @@ import { products } from "@/lib/products";
 import { whatsappLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/site/Reveal";
 import heroOrder from "@/assets/hero-order.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
