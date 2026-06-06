@@ -121,6 +121,15 @@ function HomePage() {
     setMouse({ x, y });
   };
 
+  const heroTiles = [
+    { label: "Flex", image: catOutdoor, tint: "from-amber-500/30 to-amber-700/40" },
+    { label: "LED", image: catSignage, tint: "from-yellow-400/30 to-amber-600/40" },
+    { label: "Cards", image: catCards, tint: "from-amber-300/30 to-yellow-600/40" },
+    { label: "Trophy", image: catAwards, tint: "from-yellow-500/30 to-amber-800/40" },
+    { label: "Brochure", image: catPrint, tint: "from-amber-400/30 to-yellow-700/40" },
+    { label: "Standee", image: catDisplay, tint: "from-yellow-300/30 to-amber-700/40" },
+  ];
+
   return (
     <div>
       {/* HERO */}
@@ -128,71 +137,103 @@ function HomePage() {
         ref={heroRef}
         onMouseMove={onMouseMove}
         onMouseLeave={() => setMouse({ x: 0, y: 0 })}
-        className="relative isolate overflow-hidden bg-primary text-primary-foreground"
+        className="relative isolate overflow-hidden bg-ink text-white"
       >
-        <img
-          src={hero}
-          alt="Industrial printing press"
-          className="absolute inset-0 h-[115%] w-full object-cover opacity-50 will-change-transform transition-transform duration-300 ease-out"
-          style={{
-            transform: `translate3d(${mouse.x * 14}px, ${mouse.y * 14}px, 0) scale(1.05)`,
-          }}
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black" />
-        <div className="absolute inset-0 grid-bg opacity-20" />
+        {/* Royal gold backdrop */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,oklch(0.32_0.08_75)_0%,transparent_55%),radial-gradient(circle_at_80%_80%,oklch(0.28_0.07_60)_0%,transparent_55%),linear-gradient(135deg,#0a0a0a,#1a140a_55%,#0a0a0a)]" />
+        <div className="absolute inset-0 grid-bg opacity-[0.07]" />
+        {/* Floating gold orbs */}
+        <div className="pointer-events-none absolute -left-32 top-10 h-96 w-96 rounded-full bg-gold/20 blur-[120px] animate-pulse" />
+        <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-amber-600/20 blur-[120px] animate-pulse" style={{ animationDelay: "1.5s" }} />
         <div
-          className="pointer-events-none absolute -inset-px opacity-60 transition-opacity duration-500"
+          className="pointer-events-none absolute -inset-px opacity-70 transition-opacity duration-500"
           style={{
-            background: `radial-gradient(600px circle at ${(mouse.x + 0.5) * 100}% ${(mouse.y + 0.5) * 100}%, rgba(255,255,255,0.08), transparent 60%)`,
+            background: `radial-gradient(700px circle at ${(mouse.x + 0.5) * 100}% ${(mouse.y + 0.5) * 100}%, oklch(0.74_0.12_80/0.15), transparent 60%)`,
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 md:px-8 md:py-40">
-          <div className="max-w-3xl">
-            <span className="inline-flex animate-slide-up items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-white/80 backdrop-blur">
-              <Clock className="h-3.5 w-3.5" /> Fast Delivery · Ludhiana
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
+          {/* LEFT — copy */}
+          <div>
+            <span className="inline-flex animate-slide-up items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-gold backdrop-blur">
+              <Clock className="h-3.5 w-3.5" /> Ludhiana's #1 Printing Partner
             </span>
-            <h1 className="mt-6 animate-slide-up delay-100 font-display text-5xl font-bold leading-[1.05] tracking-tight text-balance md:text-7xl lg:text-8xl">
-              Gitesh
-              <br />
-              <span className="text-gradient-light">Enterprises</span>
+            <h1 className="mt-6 animate-slide-up delay-100 font-display text-5xl font-bold leading-[1.02] tracking-tight text-balance md:text-7xl">
+              Gitesh{" "}
+              <span className="bg-gradient-to-r from-amber-200 via-gold to-amber-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_oklch(0.74_0.12_80/0.4)]">
+                Enterprises
+              </span>
             </h1>
-            <AnimatedTagline className="mt-6 animate-slide-up delay-200 text-xl font-medium text-white/80 md:text-2xl" />
-            <p className="mt-6 max-w-xl animate-slide-up delay-300 text-base text-white/60 md:text-lg">
-              Premium flex, LED signage, ID cards, trophies and custom prints — crafted with precision for shops, schools and businesses.
+            <AnimatedTagline className="mt-6 animate-slide-up delay-200 text-xl font-medium text-white/85 md:text-2xl" />
+            <p className="mt-5 max-w-xl animate-slide-up delay-300 text-base text-white/60 md:text-lg">
+              All printing solutions in one place — premium quality, fast turnaround, and unbeatable prices in Ludhiana, Punjab.
             </p>
 
-            <div className="mt-10 flex animate-slide-up delay-500 flex-wrap items-center gap-4">
+            <div className="mt-9 flex animate-slide-up delay-500 flex-wrap items-center gap-4">
               <a
                 href={whatsappLink("Hi, I want to place an order with Gitesh Enterprises")}
                 target="_blank"
                 rel="noreferrer"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-glow transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_-5px_rgba(255,255,255,0.6)] active:scale-95 active:duration-75"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-gold via-amber-400 to-gold bg-[length:200%_100%] px-7 py-3.5 text-sm font-semibold text-ink shadow-glow transition-all duration-500 hover:scale-105 hover:bg-[position:100%_0] active:scale-95"
               >
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/5 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <span className="relative">Order Now</span>
                 <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
               </a>
               <Link
                 to="/shop"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/60 hover:bg-white/10 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] active:scale-95 active:duration-75"
+                className="group inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:shadow-[0_0_30px_-5px_oklch(0.74_0.12_80/0.5)] active:scale-95"
               >
                 Browse Shop
                 <ArrowRight className="h-4 w-4 opacity-0 -ml-2 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0" />
               </Link>
             </div>
+
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/70">
+              <span className="flex items-center gap-2"><BadgeCheck className="h-4 w-4 text-gold" /> 500+ Clients</span>
+              <span className="flex items-center gap-2"><Truck className="h-4 w-4 text-gold" /> Fast Delivery</span>
+              <span className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-gold" /> Custom Sizes</span>
+            </div>
+          </div>
+
+          {/* RIGHT — 6-tile bento */}
+          <div className="relative grid grid-cols-2 gap-3 md:gap-4 animate-slide-up delay-300">
+            {heroTiles.map((t, i) => (
+              <Link
+                key={t.label}
+                to="/shop"
+                className="group relative aspect-square overflow-hidden rounded-2xl border border-gold/25 bg-ink/40 shadow-[0_10px_40px_-15px_oklch(0.74_0.12_80/0.4)] transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/70 hover:shadow-[0_20px_50px_-10px_oklch(0.74_0.12_80/0.6)]"
+                style={{ animationDelay: `${i * 80}ms` }}
+              >
+                <img
+                  src={t.image}
+                  alt={t.label}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover opacity-70 transition-all duration-700 group-hover:scale-110 group-hover:opacity-90"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-br ${t.tint} mix-blend-overlay`} />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
+                {/* shimmer */}
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/30 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+                <div className="absolute inset-x-3 bottom-3 flex items-center justify-between">
+                  <span className="font-display text-lg font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] md:text-xl">
+                    {t.label}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-gold opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
+                </div>
+                <div className="absolute right-3 top-3 h-2 w-2 rounded-full bg-gold shadow-[0_0_12px_oklch(0.74_0.12_80)] opacity-70 transition-opacity group-hover:opacity-100" />
+              </Link>
+            ))}
           </div>
         </div>
 
         {/* Marquee */}
-        <div className="relative border-y border-white/10 bg-black/40 py-5">
-          <div className="flex w-max marquee gap-12 whitespace-nowrap text-sm font-medium uppercase tracking-[0.3em] text-white/40">
+        <div className="relative border-y border-gold/15 bg-black/50 py-5">
+          <div className="flex w-max marquee gap-12 whitespace-nowrap text-sm font-medium uppercase tracking-[0.3em] text-gold/50">
             {[...services, ...services].map((s, i) => (
               <span key={i} className="flex items-center gap-12">
                 {s}
-                <span className="h-1 w-1 rounded-full bg-white/30" />
+                <span className="h-1 w-1 rounded-full bg-gold/40" />
               </span>
             ))}
           </div>
